@@ -1,24 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import report from './report.json';
+
 
 function App() {
+
+  console.log(report)
+
+
+
+  // for (let i = 0; i < report.markers.length; i++) {
+
+  //   console.log(i)
+  //   console.log(report.markers[i].name)
+  // }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {report.markers[0].name}
+      {
+        report.markers.map((marker, index) => {
+          return (
+            <div key={index} >
+              <div>{marker.id}</div>
+              <div>{marker.name}</div>
+              <div>{marker.short}</div>
+              <div>{marker.info}</div>
+                <div>
+                  {marker.measurements.map((measurement, index) => {
+                    return (
+                      <div key={index}>
+                        <div>score {measurement.score}</div>
+                      </div>
+                    )
+                  })}
+                </div>
+            </div>
+          )
+        })
+      }
     </div>
   );
 }
