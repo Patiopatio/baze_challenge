@@ -9,22 +9,25 @@ import config from '../api/config.json'
 
 
 export const Report = () => {
-    console.log(report)
-    console.log(config)
-
+    // the markers mapped to the configs category (off-track, normal, optimal)
     const [assessmentMarkers, setAssessmentMarkers] = useState([])
     const [bazeScore, setBazeScore] = useState([])
+    // mocked and not used for the challenge
     const [selectedMonth, setSelectedMonth] = useState(null)
 
     useEffect(() => {
+        // get categories of config file
         const assessments = _mapAssessments(config)
+        // sort markers into categories (off-track, normal, optimal)
         const mappedMarkers = _mapMarkers(report.markers, assessments)
         setAssessmentMarkers(mappedMarkers)
+        // filtering out bazescore from health benefits
         const _bazeScore = _mapBazeScore(report.healthBenefits)
         setBazeScore(_bazeScore)
     }, [])
 
     const _mapAssessments = (categories) => {
+        // get names of categories
         return categories.map((category) => { return category.assessment })
     }
 
@@ -32,7 +35,7 @@ export const Report = () => {
         const bazeScore = benefits.filter(benefit => benefit.name === 'Baze Score')[0]
         const latestMeasurement = _getLatestMeasurement(bazeScore.scoreHistory)
         const score = Math.round(latestMeasurement.score)
-        const date = moment(latestMeasurement.date).format('Do MMM,  YY')
+        const date = moment(latestMeasurement.date).format('Do MMM, YYYY')
         const category = _getCategory(score, config)
         const color = category.color
         const assessment = category.assessment
@@ -47,7 +50,7 @@ export const Report = () => {
     }
 
     const _getLatestMeasurement = (scoreHistory) => {
-        //sort measurements of the latest date
+        //sort measurements of the latest date by comparing the dates
         // see https://stackoverflow.com/questions/35202163/filter-object-array-to-return-the-object-with-the-latest-date-property
         const latestHistory = scoreHistory.sort(function (a, b) {
             return new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -57,7 +60,7 @@ export const Report = () => {
     }
 
     const _getLatestScore = (measurements) => {
-        //filter only ok values
+        //filter through measurement array to only get ok values, skip errors
         const filteredMeasurements = measurements.filter((measurement) => {
             return measurement.status === "ok"
         })
@@ -83,6 +86,7 @@ export const Report = () => {
     const _mapMarkers = (markers, assesments) => {
         const mappedMarkers = {}
         for (let assessment of assesments) {
+            // initialize empty array for each assessment
             mappedMarkers[assessment] = []
         }
 
@@ -108,6 +112,7 @@ export const Report = () => {
             <HeaderSection>
                 <Header>Your report</Header>
                 <MonthChoice>
+                    {/* These filters are mocked */}
                     <Month onClick={() => setSelectedMonth('oct')}>Oct</Month>
                     <Month onClick={() => setSelectedMonth('nov')}>Nov</Month>
                     <Month onClick={() => setSelectedMonth('dec')}>Dec</Month>
