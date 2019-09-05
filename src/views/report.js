@@ -16,6 +16,8 @@ export const Report = () => {
     const [selectedMonth, setSelectedMonth] = useState(null)
 
     useEffect(() => {
+        // mapping the api data into the right format to display in components
+        
         // get categories of config file
         const assessments = _mapAssessments(config)
         // sort markers into categories (off-track, normal, optimal)
