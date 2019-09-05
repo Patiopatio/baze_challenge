@@ -15,7 +15,7 @@ export const MarkersSection = ({ assessmentMarkers }) => {
                 return (
                     <div key={index}>
                         <h2>{assessment}</h2>
-                        {/* loop through markesrs of assessment */}
+                        {/* loop through markers of assessment */}
                         {assessmentMarkers[assessment].map((marker, index) => {
                             return <Marker marker={marker} key={index} />
                         })}
