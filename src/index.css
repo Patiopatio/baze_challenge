@@ -5,6 +5,7 @@ body {
   font-family: 'Averta', Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: rgb(245, 245, 245);
 }
 
 code {
